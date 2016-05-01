@@ -1,0 +1,21 @@
+version: '2'
+services:
+    setkayo-app:
+        image: setkayo
+        external_links:
+            - setkayo-postgresql:postgresql
+            - setkayo-elasticsearch:elasticsearch
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/setkayo
+            - SPRING_DATA_ELASTICSEARCH_CLUSTER_NODES=elasticsearch:9300
+        ports:
+            - 8080:8080
+    setkayo-postgresql:
+        extends:
+            file: postgresql.yml
+            service: setkayo-postgresql
+    setkayo-elasticsearch:
+        extends:
+            file: elasticsearch.yml
+            service: setkayo-elasticsearch
